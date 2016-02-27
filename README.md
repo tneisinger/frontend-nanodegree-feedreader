@@ -2,25 +2,28 @@
 
 This is my submission for project #6 of the Udacity Frontend Nanodegree
 program.  In this project, I was given a simple application and was required to
-use [Jasmine](http://jasmine.github.io/) to write tests to verify the
-functionality of the application.
+use [Jasmine](http://jasmine.github.io/) to test the functionality of the
+application.
 
 # Setup
 
-To run the application, simply clone this repo and open the index.html in your
-favorite web browser.  The Jasmine test outcomes will be displayed at the
+To run the application, simply clone this repo and open the index.html file in
+your favorite web browser.  The Jasmine test outcomes will be displayed at the
 bottom of the page.
+
+The test code can be found at `jasmine/spec/feedreader.js`.
 
 # NOTE: Not All Tests Will Pass!
 
-One of the key benefits of completing this project was to gain experience in Test Driven
-Development.  Test Driven Development is a technique in which the tests for a
-feature are written BEFORE the feature is implemented.
+One of the key benefits of completing this project was to gain experience in
+[test-driven
+development](https://en.wikipedia.org/wiki/Test-driven_development).
+Test-driven development is a technique in which the tests for a feature are
+written BEFORE the feature is implemented.
 
 In this project, I have written tests for two features that have not been
-implemented yet: an Entry Count feature and a Current Feed feature. The tests
-for these features will not pass.  These features and their specs are described
-below.
+implemented yet: an **Entry Count** feature and a **Current Feed** feature. These
+features and their specs are described below.
 
 ## The 'Entry Count' Feature
 
@@ -34,9 +37,9 @@ the string, "20 Entries", if the current feed were displaying 20 entries.
 
 ### Specs
 
-This feature has four specs that test it.  The first two are in the Entry Count
-test suite.  These two specs check that the `entry-count` element is in the
-DOM, and that it is empty when the app first loads.
+The Entry Count feature has four specs that test it.  The first two are in the
+Entry Count test suite.  These two specs check that the `entry-count` element
+is actually in the DOM, and that it is empty when the app first loads.
 
 The final two specs for this feature are divided between the Initial Entries
 test suite and the New Feed Selection test suite.  Both of these specs check
@@ -45,12 +48,13 @@ loading a new feed.
 
 ## The 'Current Feed' Feature
 
-Once complete, this feature would add a `current-feed` class to the `<a>`
-element in the slide menu that corresponds to the currently loaded feed.  This
-would allow different styling to be applied to that `<a>` element. When the app
-first loads, no `<a>` element in the menu should have the `current-feed` class.
-After any feed has been loaded, the `current-feed` class should only be
-present on the corresponding `<a>` element in the slide menu.
+Once complete, the Current Feed feature would add a `current-feed` class to the
+`<a>` element in the slide menu that corresponds to the currently loaded feed.
+This would allow different styling to be applied to that `<a>` element. When
+the app first loads, no `<a>` element in the menu should have the
+`current-feed` class.  After a feed has been loaded, the `current-feed` class
+should be present on the corresponding `<a>` element in the slide menu, and no
+others.
 
 ### Specs
 
