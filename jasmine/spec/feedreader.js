@@ -98,8 +98,12 @@ $(function() {
             expect(hider).toBeDefined();
         });
 
-    });
+        it('does not style a feed as the "current-feed" initially', function() {
+            var currentFeed = $('.slide-menu .current-feed')[0];
+            expect(currentFeed).toBeUndefined();
+        });
 
+    });
 
     /* A test suite that checks the behavior of the '.entry-count' element.
      * The '.entry-count' element displays the number of entries that are
@@ -128,12 +132,14 @@ $(function() {
      * the header-title and entry-count get updated.
      */
     describe('Initial Entries', function() {
+        // A constant that is the ID of the feed that will be loaded.
+        var NEW_FEED_ID = 0;
 
         /* Before running the specs, run the loadFeed function, passing
          * `done` as a callback, since loadFeed is an asynchronous function.
          */
         beforeAll(function(done) {
-            loadFeed(0, done);
+            loadFeed(NEW_FEED_ID, done);
         });
 
         // Check that at least one entry gets added to the DOM
@@ -154,6 +160,15 @@ $(function() {
             var entriesLen = $('.entry').length;
             expect(entryCount).toBe(entriesLen + ' Entries');
         });
+
+        /* Check that only the correct feed is marked as the current feed in
+         * the slide menu.
+         */
+        it('mark only the loaded feed as the current feed in the menu', function() {
+            var currentFeed = $('.feed-list .current-feed');
+            expect(currentFeed.length).toBe(1);
+            expect(currentFeed.data('id')).toBe(NEW_FEED_ID);
+        });
     });
 
 
@@ -161,6 +176,9 @@ $(function() {
      * replaced with new entries when a new feed selection is made.
      */
     describe('New Feed Selection', function() {
+
+        // A constant that is the ID of the feed that will be loaded.
+        var NEW_FEED_ID = 1;
 
         // If the allFeeds array does not have at least two feeds, throw an error.
         if (allFeeds.length < 2) {
@@ -178,7 +196,7 @@ $(function() {
          * as a callback, since loadFeed is an asynchronous function.
          */
         beforeAll(function(done) {
-            loadFeed(1, done);
+            loadFeed(NEW_FEED_ID, done);
         });
 
         /* Check that the list of entries in the feed changes when the
@@ -196,11 +214,20 @@ $(function() {
             expect(headerTitleAfter).toBe(allFeeds[1].name);
         });
 
-        // Check that the entry count matches the new number of entries 
+        // Check that the entry count matches the new number of entries.
         it('updates the entry count', function() {
             var entryCountElem = $('.entry-count')[0];
             var entriesLen = $('.feed .entry').length;
             expect(entryCountElem.innerHTML).toBe(entriesLen + ' Entries');
+        });
+
+        /* Check that only the correct feed is marked as the current feed in
+         * the slide menu.
+         */
+        it('marks only the new feed as the current feed in the menu', function() {
+            var currentFeed = $('.feed-list .current-feed');
+            expect(currentFeed.length).toBe(1);
+            expect(currentFeed.data('id')).toBe(NEW_FEED_ID);
         });
 
     });
