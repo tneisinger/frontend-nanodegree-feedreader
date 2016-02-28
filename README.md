@@ -2,8 +2,7 @@
 
 This is my submission for project #6 of the Udacity Frontend Nanodegree
 program.  In this project, I was given a simple application and was required to
-use [Jasmine](http://jasmine.github.io/) to test the functionality of the
-application.
+write tests for it using [Jasmine](http://jasmine.github.io/).
 
 # Setup
 
