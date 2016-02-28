@@ -144,20 +144,20 @@ $(function() {
 
         // Check that at least one entry gets added to the DOM
         it('populate the feed div', function() {
-            var entries = $('.entry');
+            var entries = $('.feed .entry');
             expect(entries.length).toBeGreaterThan(0);
         });
 
         // Check that the header title gets changed to the feed name
         it('change the header title', function() {
           var headerTitle = $('.header-title');
-          expect(headerTitle.text()).toBe(allFeeds[0].name);
+          expect(headerTitle.text()).toBe(allFeeds[NEW_FEED_ID].name);
         });
 
         // Check that the entry count gets updated to the correct value
         it('update the entry count', function() {
             var entryCount = $('.entry-count').text();
-            var entriesLen = $('.entry').length;
+            var entriesLen = $('.feed .entry').length;
             expect(entryCount).toBe(entriesLen + ' Entries');
         });
 
@@ -177,7 +177,7 @@ $(function() {
      */
     describe('New Feed Selection', function() {
 
-        // A constant that is the ID of the feed that will be loaded.
+        // A constant that is the ID of the last feed that will be loaded.
         var NEW_FEED_ID = 1;
 
         // If the allFeeds array does not have at least two feeds, throw an error.
@@ -188,22 +188,33 @@ $(function() {
             throw(err);
         }
 
-        // Before running loadFeed, get the entries and the header-title.
-        var entriesBefore = $('.entry');
-        var headerTitleBefore = $('.header-title').text();
+        // Instantiate these variables in this wider scope.
+        var entriesBefore,
+            headerTitleBefore;
 
-        /* Before running the specs, run the loadFeed function, passing `done`
-         * as a callback, since loadFeed is an asynchronous function.
+        /* Before running the specs, load an initial feed and save the entries
+         * and headerTitle in variables for later testing. Then load another
+         * feed to ensure that we are switching from one loaded feed to
+         * another.
          */
         beforeAll(function(done) {
-            loadFeed(NEW_FEED_ID, done);
+            // Load an initial feed
+            loadFeed(0, function() {
+
+                // After the feed has loaded, grab the html we need for tests
+                entriesBefore = $('.feed .entry');
+                headerTitleBefore = $('.header-title').text();
+
+                // load a new feed
+                loadFeed(NEW_FEED_ID, done);
+            });
         });
 
         /* Check that the list of entries in the feed changes when the
          * `loadFeed` function is run with a different index.
          */
         it('replaces the list of entries in the feed div', function() {
-            var entriesAfter = $('.entry'); 
+            var entriesAfter = $('.feed .entry');
             expect(entriesBefore).not.toBe(entriesAfter);
         });
 
@@ -211,14 +222,14 @@ $(function() {
         it('Changes the header-title', function() {
             var headerTitleAfter = $('.header-title').text();
             expect(headerTitleBefore).not.toBe(headerTitleAfter);
-            expect(headerTitleAfter).toBe(allFeeds[1].name);
+            expect(headerTitleAfter).toBe(allFeeds[NEW_FEED_ID].name);
         });
 
         // Check that the entry count matches the new number of entries.
         it('updates the entry count', function() {
-            var entryCountElem = $('.entry-count')[0];
+            var entryCountElem = $('.entry-count');
             var entriesLen = $('.feed .entry').length;
-            expect(entryCountElem.innerHTML).toBe(entriesLen + ' Entries');
+            expect(entryCountElem.text()).toBe(entriesLen + ' Entries');
         });
 
         /* Check that only the correct feed is marked as the current feed in
